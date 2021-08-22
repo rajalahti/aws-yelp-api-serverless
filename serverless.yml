@@ -1,0 +1,23 @@
+service: yelp-api
+frameworkVersion: '2'
+
+provider:
+  name: aws
+  region: us-east-1 # Replace this with the AWS location you want to use
+  runtime: nodejs12.x
+  lambdaHashingVersion: 20201221
+
+functions:
+  businessSearch:
+    handler: handler.search
+    memorySize: 128
+    description: Search for businesses using Yelp API, provide search term and location
+    events:
+      - http: 
+          path: search
+          method: get
+          cors: true # This setting enables CORS for the API
+          parameters:
+              querystrings:
+                term: true
+                location: true
